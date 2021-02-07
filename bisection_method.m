@@ -30,7 +30,7 @@
 %
 % See also fzero
 %
-% MATLAB Central File Exchange:
+% MATLAB Central File Exchange: https://www.mathworks.com/matlabcentral/fileexchange/87042-bisection-method-bisection_method
 % GitHub: https://github.com/tamaskis/bisection_method-MATLAB
 %
 % See "Bisection Method - MATLAB implementation.pdf" for additional 

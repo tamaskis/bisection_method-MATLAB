@@ -1,4 +1,4 @@
-# `bisection_method`
+# `bisection_method` [![View Bisection Method (bisection_method) on File Exchange](https://www.mathworks.com/matlabcentral/images/matlab-file-exchange.svg)](https://www.mathworks.com/matlabcentral/fileexchange/87042-bisection-method-bisection_method)
 
 Calculates the root of a univariate function using the bisection method.
 

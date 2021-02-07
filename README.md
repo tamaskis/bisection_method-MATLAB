@@ -35,7 +35,7 @@ Enter <img src="https://latex.codecogs.com/svg.latex?f(x)" title="f(x)" /> into 
 
     f = @(x) x^2-1;
     
-Since <img src="https://latex.codecogs.com/svg.latex?f(x)" title="f(x)" /> is a simple function, we can see, by inspection, that it will have two roots at <img src="https://latex.codecogs.com/svg.latex?x\pm1" title="x\pm1" />. Therefore, we use the bisection method twice, with two different initial guesses for the interval containing the root. Let's pick <img src="https://latex.codecogs.com/svg.latex?[-10,0]" title="[-10,0]" /> and <img src="https://latex.codecogs.com/svg.latex?[-10,0]" title="[-10,0]" /> as our initial guesses for this interval.
+Since <img src="https://latex.codecogs.com/svg.latex?f(x)" title="f(x)" /> is a simple function, we can see, by inspection, that it will have two roots at <img src="https://latex.codecogs.com/svg.latex?x\pm1" title="x\pm1" />. Therefore, we use the bisection method twice, with two different initial guesses for the interval containing the root. Let's pick <img src="https://latex.codecogs.com/svg.latex?[-10,0]" title="[-10,0]" /> and <img src="https://latex.codecogs.com/svg.latex?[0,10]" title="[0,10]" /> as our initial guesses for this interval.
 
     % finds first root of f(x)=x^2-1 using the bisection method
     root1 = bisection_method(f,-10,0)

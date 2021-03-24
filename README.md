@@ -25,33 +25,6 @@ Calculates the root of a univariate function using the bisection method.
 `root = bisection_method(__,'all')` returns a vector, where the first element of this vector is the initial guess, all intermediate elements are the intermediate estimates of the root, and the last element is the converged root. This identifier 'all' may be appended to any of the syntaxes used above.
 
 
-## Example
+## Additional Documentation and Examples
 
-Consider the function
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <img src="https://latex.codecogs.com/svg.latex?f(x)=x^{2}-1" title="f(x)=x^{2}-1" />
-
-Enter <img src="https://latex.codecogs.com/svg.latex?f(x)" title="f(x)" /> into MATLAB.
-
-    f = @(x) x^2-1;
-    
-Since <img src="https://latex.codecogs.com/svg.latex?f(x)" title="f(x)" /> is a simple function, we can see, by inspection, that it will have two roots at <img src="https://latex.codecogs.com/svg.latex?x\pm1" title="x\pm1" />. Therefore, we use the bisection method twice, with two different initial guesses for the interval containing the root. Let's pick <img src="https://latex.codecogs.com/svg.latex?[-10,0]" title="[-10,0]" /> and <img src="https://latex.codecogs.com/svg.latex?[0,10]" title="[0,10]" /> as our initial guesses for this interval.
-
-    % finds first root of f(x)=x^2-1 using the bisection method
-    root1 = bisection_method(f,-10,0)
-
-    % finds second root of f(x)=x^2-1 using the bisection method
-    root2 = bisection_method(f,0,10)
-
-This yields the result
-
-    root1 =
-
-        -1.0000
-
-
-    root2 =
-
-         1.0000
-
-*NOTE: A more complex example is also provided in "Bisection Method - MATLAB Implementation.pdf".*
+See "DOCUMENTATION.pdf" for additional documentation and examples.

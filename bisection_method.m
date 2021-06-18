@@ -11,34 +11,35 @@
 %
 % See also fzero
 %
+% Copyright © 2021 Tamas Kis
+% Last Update: 2021-06-18
+%
+%--------------------------------------------------------------------------
+%
 % MATLAB Central File Exchange: https://www.mathworks.com/matlabcentral/fileexchange/87042-bisection-method-bisection_method
 % GitHub: https://github.com/tamaskis/bisection_method-MATLAB
 %
-% See "DOCUMENTATION.pdf" for additional documentation and examples. 
-% Examples can also be found in EXAMPLES.mlx. Both of these files are 
-% included with the download.
-%
-% Copyright (c) 2021 Tamas Kis
-% Last Update: 2021-06-01
+% See EXAMPLES.mlx for examples and "DOCUMENTATION.pdf" for additional 
+% documentation. Both of these files are included with the download.
 %
 %--------------------------------------------------------------------------
 %
 % -------
 % INPUTS:
 % -------
-%   f       (function handle) f(x)
-%   a       (1x1) lower bound for initial guess of interval containing root
-%   b       (1x1) upper bound for initial guess of interval containing root
-%  	TOL     (OPTIONAL) (1x1) tolerance
-% 	imax	(OPTIONAL) (1x1) maximum number of iterations
-%	output	(OPTIONAL) if specified as 'all', function will returns all 
-%                      intermediate root estimates; otherwise, a faster 
-%                      algorithm is used to only return the converged root
+%   f       - (function_handle) f(x)
+%   a       - (1×1) lower bound for initial guess of interval with root
+%   b       - (1×1) upper bound for initial guess of interval with root
+%  	TOL     - (OPTIONAL) (1×1) tolerance
+% 	imax	- (OPTIONAL) (1×1) maximum number of iterations
+%	output	- (OPTIONAL) (char) if specified as 'all', function will return
+%             all intermediate root estimates; otherwise, a faster 
+%             algorithm is used to only return the converged root
 %
 % --------
 % OUTPUTS:
 % --------
-%   root    root of f(x)
+%   root    - (1×1 or n×1) root of f(x)
 %           	--> if "output" is specified as 'all', then "root" will be
 %                   a vector, where the first element is the initial guess,
 %                   the last element is the converged root, and the other 
@@ -81,7 +82,7 @@ function root = bisection_method(f,a,b,TOL,imax,output)
 
         % bisection method
         i = 1;
-        while (i < imax) && ((b-a) > TOL)
+        while ((b-a) > TOL) && (i < imax)
             
             % updates interval
             if f(x(i)) == 0
@@ -129,7 +130,7 @@ function root = bisection_method(f,a,b,TOL,imax,output)
 
         end
 
-        % returns root
+        % returns converged root
         root = c;
         
     end

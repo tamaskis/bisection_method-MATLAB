@@ -25,6 +25,7 @@ Calculates the root of a univariate function using the bisection method.
 `root = bisection_method(__,'all')` returns a vector, where the first element of this vector is the initial guess, all intermediate elements are the intermediate estimates of the root, and the last element is the converged root. This identifier 'all' may be appended to any of the syntaxes used above.
 
 
-## Additional Documentation and Examples
+## Examples and Additional Documentation
 
-See "DOCUMENTATION.pdf" for additional documentation and examples.
+   -  See "EXAMPLES.mlx" or the "Examples" tab on the File Exchange page for examples. 
+   -  See "DOCUMENTATION.pdf" (included with download, also available at https://github.com/tamaskis/bisection_method-MATLAB/blob/main/DOCUMENTATION.pdf) for additional documentation.

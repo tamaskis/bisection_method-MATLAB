@@ -9,10 +9,11 @@
 %   root = bisection_method(f,a,b,TOL,imax)
 %   root = bisection_method(__,'all')
 %
-% See also fzero
+% See also fzero, newtons_method, secant_method
 %
 % Copyright © 2021 Tamas Kis
-% Last Update: 2021-06-18
+% Contact: tamas.a.kis@outlook.com
+% Last Update: 2021-07-04
 %
 %--------------------------------------------------------------------------
 %

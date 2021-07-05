@@ -13,7 +13,7 @@
 %
 % Copyright © 2021 Tamas Kis
 % Contact: tamas.a.kis@outlook.com
-% Last Update: 2021-07-04
+% Last Update: 2021-07-05
 %
 %--------------------------------------------------------------------------
 %
@@ -25,9 +25,9 @@
 %
 %--------------------------------------------------------------------------
 %
-% -------
-% INPUTS:
-% -------
+% ------
+% INPUT:
+% ------
 %   f       - (function_handle) f(x)
 %   a       - (1×1) lower bound for initial guess of interval with root
 %   b       - (1×1) upper bound for initial guess of interval with root
@@ -37,9 +37,9 @@
 %             all intermediate root estimates; otherwise, a faster 
 %             algorithm is used to only return the converged root
 %
-% --------
-% OUTPUTS:
-% --------
+% -------
+% OUTPUT:
+% -------
 %   root    - (1×1 or n×1) root of f(x)
 %           	--> if "output" is specified as 'all', then "root" will be
 %                   a vector, where the first element is the initial guess,

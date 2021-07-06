@@ -105,6 +105,8 @@ function root = bisection_method(f,a,b,TOL,imax,output)
         % returns converged root along with intermediate root estimates
         root = x(1:i);
     
+  	% implements (faster) algorithm for the bisection method where only the
+    % converged root estimate is returned
     else
         
         % sets initial guess

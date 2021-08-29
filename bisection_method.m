@@ -4,20 +4,21 @@
 % bisection method.
 %
 %   root = bisection_method(f,a,b)
-%   root = bisection_method(f,a,b,TOL)
-%   root = bisection_method(f,a,b,[],imax)
-%   root = bisection_method(f,a,b,TOL,imax)
-%   root = bisection_method(__,'all')
+%   root = bisection_method(f,a,b,opts)
 %
 % See also fzero, newtons_method, secant_method.
 %
 % Copyright © 2021 Tamas Kis
-% Last Update: 2021-07-25
-% Website: tamaskis.github.io
+% Last Update: 2021-08-28
+% Website: https://tamaskis.github.io
 % Contact: tamas.a.kis@outlook.com
 %
+% TECHNICAL DOCUMENTATION:
+% https://tamaskis.github.io/documentation/Bisection_Method.pdf
+%
 % REFERENCES:
-%   [1] https://tamaskis.github.io/documentation/Bisection%20Method.pdf
+%   [1] https://en.wikipedia.org/wiki/Bisection_method
+%   [2] Burden and Faires, "Numerical Analysis", 9th Ed. (pp. 48-55)
 %
 %--------------------------------------------------------------------------
 %
@@ -25,50 +26,71 @@
 % INPUT:
 % ------
 %   f       - (function_handle) f(x)
-%   a       - (1×1) lower bound for initial guess of interval with root
-%   b       - (1×1) upper bound for initial guess of interval with root
-%   TOL     - (OPTIONAL) (1×1) tolerance
-%   imax    - (OPTIONAL) (1×1) maximum number of iterations
-%   output  - (OPTIONAL) (char) if specified as 'all', function will return
-%             all intermediate root estimates; otherwise, a faster 
-%             algorithm is used to only return the converged root
+%   a       - (1×1 double) initial guess for lower bound of interval with 
+%             root
+%   b       - (1×1 double) initial guess for upper bound of interval with 
+%             root
+%   opts    - (OPTIONAL) (struct) solver options structure
+%       • imax          - (1×1 double) maximimum number of iterations
+%       • return_all    - (logical) all intermediate root estimates are
+%                         returned if set to "true"; otherwise, a faster 
+%                         algorithm is used to return only the converged 
+%                         root
+%       • TOL           - (1×1 double) tolerance
+%       • warnings      - (logical) true if any warnings should be
+%                         displayed, false if not
 %
 % -------
 % OUTPUT:
 % -------
-%   root    - (1×1 or n×1) root of f(x)
-%           	--> if "output" is specified as 'all', then "root" will be
-%                   a vector, where the first element is the initial guess,
-%                   the last element is the converged root, and the other 
-%                   elements are intermediate estimates of the root
-%               --> otherwise, "root" is a single number storing the
-%                   converged root
+%   root    - (1×1 or n×1 double) root of f(x)
+%           	--> If "return_all" is specified as "true", then "root" 
+%                   will be a vector, where the first element is the 
+%                   initial guess, the last element is the converged root, 
+%                   and the other elements are intermediate estimates of 
+%                   the root.
+%               --> Otherwise, "root" is a single number storing the
+%                   converged root.
 %
 %==========================================================================
-function root = bisection_method(f,a,b,TOL,imax,output)
+function root = bisection_method(f,a,b,opts)
     
-    % sets default tolerance and maximum number of iterations if not
-    % specified by user
-    if (nargin < 4) || isempty(TOL)
-        TOL = 1e-12;
-    end
-    if (nargin < 5) || isempty(imax)
+    % ----------------------------------
+    % Sets (or defaults) solver options.
+    % ----------------------------------
+    
+    % sets maximum number of iterations (defaults to 1e6)
+    if (nargin < 4) || isempty(opts) || ~isfield(opts,'imax')
         imax = 1e6;
+    else
+        imax = opts.imax;
     end
     
-    % decides which algorithm to use
-    if nargin < 6
+    % determines return value (defaults to only return converged root)
+    if (nargin < 4) || isempty(opts) || ~isfield(opts,'return_all')
         return_all = false;
     else
-        if strcmpi(output,'all')
-            return_all = true;
-        else
-            return_all = false;
-        end
+        return_all = opts.return_all;
     end
     
-    % implements algorithm for the bisection method where all intermediate 
-    % root estimates are also returned
+    % sets tolerance (defaults to 1e-12)
+    if (nargin < 4) || isempty(opts) || ~isfield(opts,'TOL')
+        TOL = 1e-12;
+    else
+        TOL = opts.TOL;
+    end
+    
+    % determines if warnings should be displayed (defaults to display)
+    if (nargin < 4) || isempty(opts) || ~isfield(opts,'warnings')
+        warnings = true;
+    else
+        warnings = opts.warnings;
+    end
+    
+    % ----------------------------------------------------
+    % "Return all" implementation of the bisection method.
+    % ----------------------------------------------------
+    
     if return_all
         
         % preallocates x
@@ -97,12 +119,21 @@ function root = bisection_method(f,a,b,TOL,imax,output)
             i = i+1;
 
         end
+        
+        % displays warning if maximum number of iterations reached
+        if (i == imax) && warnings
+            warning(strcat('The method failed after n=',num2str(imax),...
+                ' iterations.'));
+        end
 
         % returns converged root along with intermediate root estimates
         root = x(1:i);
     
-  	% implements (faster) algorithm for the bisection method where only the
-    % converged root estimate is returned
+  	
+    % ----------------------------------------------
+    % "Fast" implementation of the bisection method.
+    % ----------------------------------------------
+    
     else
         
         % sets initial guess
@@ -127,6 +158,12 @@ function root = bisection_method(f,a,b,TOL,imax,output)
             % increments loop index
             i = i+1;
 
+        end
+        
+        % displays warning if maximum number of iterations reached
+        if (i == imax) && warnings
+            warning(strcat('The method failed after n=',num2str(imax),...
+                ' iterations.'));
         end
 
         % returns converged root

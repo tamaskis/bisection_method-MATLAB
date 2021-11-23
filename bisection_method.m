@@ -9,7 +9,7 @@
 % See also fzero, newtons_method, secant_method.
 %
 % Copyright © 2021 Tamas Kis
-% Last Update: 2021-08-28
+% Last Update: 2021-11-22
 % Website: https://tamaskis.github.io
 % Contact: tamas.a.kis@outlook.com
 %
@@ -80,7 +80,7 @@ function root = bisection_method(f,a,b,opts)
         TOL = opts.TOL;
     end
     
-    % determines if warnings should be displayed (defaults to display)
+    % determines if warnings should be displayed (defaults to true)
     if (nargin < 4) || isempty(opts) || ~isfield(opts,'warnings')
         warnings = true;
     else
@@ -122,14 +122,13 @@ function root = bisection_method(f,a,b,opts)
         
         % displays warning if maximum number of iterations reached
         if (i == imax) && warnings
-            warning(strcat('The method failed after n=',num2str(imax),...
+            warning(strcat('The method failed after ',num2str(imax),...
                 ' iterations.'));
         end
 
         % returns converged root along with intermediate root estimates
         root = x(1:i);
     
-  	
     % ----------------------------------------------
     % "Fast" implementation of the bisection method.
     % ----------------------------------------------
@@ -162,7 +161,7 @@ function root = bisection_method(f,a,b,opts)
         
         % displays warning if maximum number of iterations reached
         if (i == imax) && warnings
-            warning(strcat('The method failed after n=',num2str(imax),...
+            warning(strcat('The method failed after ',num2str(imax),...
                 ' iterations.'));
         end
 

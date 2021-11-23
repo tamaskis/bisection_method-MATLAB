@@ -122,7 +122,7 @@ function root = bisection_method(f,a,b,opts)
         
         % displays warning if maximum number of iterations reached
         if (i == imax) && warnings
-            warning(strcat('The method failed after ',num2str(imax),...
+            warning(strcat('The method failed after n=',num2str(imax),...
                 ' iterations.'));
         end
 
@@ -161,7 +161,7 @@ function root = bisection_method(f,a,b,opts)
         
         % displays warning if maximum number of iterations reached
         if (i == imax) && warnings
-            warning(strcat('The method failed after ',num2str(imax),...
+            warning(strcat('The method failed after n=',num2str(imax),...
                 ' iterations.'));
         end
 

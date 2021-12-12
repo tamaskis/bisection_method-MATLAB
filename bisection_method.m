@@ -1,15 +1,15 @@
 %==========================================================================
 %
-% bisection_method  Calculates the root of a univariate function using the 
-% bisection method.
+% bisection_method  Calculates the root of a univariate, scalar-valued 
+% function using the bisection method.
 %
 %   root = bisection_method(f,a,b)
 %   root = bisection_method(f,a,b,opts)
 %
-% See also fzero, newtons_method, secant_method.
+% See also fzero, newtons_method, secant_method, fixed_point_iteration.
 %
 % Copyright © 2021 Tamas Kis
-% Last Update: 2021-11-22
+% Last Update: 2021-12-11
 % Website: https://tamaskis.github.io
 % Contact: tamas.a.kis@outlook.com
 %
@@ -25,19 +25,20 @@
 % ------
 % INPUT:
 % ------
-%   f       - (function_handle) f(x)
+%   f       - (1×1 function_handle) univariate, scalar-valued function f(x)
+%             (f:R->R)
 %   a       - (1×1 double) initial guess for lower bound of interval with 
 %             root
 %   b       - (1×1 double) initial guess for upper bound of interval with 
 %             root
-%   opts    - (OPTIONAL) (struct) solver options structure
+%   opts    - (OPTIONAL) (1×1 struct) solver options
 %       • imax          - (1×1 double) maximimum number of iterations
-%       • return_all    - (logical) all intermediate root estimates are
+%       • return_all    - (1×1 logical) all intermediate root estimates are
 %                         returned if set to "true"; otherwise, a faster 
 %                         algorithm is used to return only the converged 
 %                         root
 %       • TOL           - (1×1 double) tolerance
-%       • warnings      - (logical) true if any warnings should be
+%       • warnings      - (1×1 logical) true if any warnings should be
 %                         displayed, false if not
 %
 % -------

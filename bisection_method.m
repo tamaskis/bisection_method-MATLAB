@@ -9,7 +9,7 @@
 % See also fzero, newtons_method, secant_method, fixed_point_iteration.
 %
 % Copyright © 2021 Tamas Kis
-% Last Update: 2021-12-11
+% Last Update: 2021-12-27
 % Website: https://tamaskis.github.io
 % Contact: tamas.a.kis@outlook.com
 %

@@ -122,12 +122,6 @@ function root = bisection_method(f,a,b,opts)
 
         end
         
-        % displays warning if maximum number of iterations reached
-        if (i == imax) && warnings
-            warning(strcat('The method failed after n=',num2str(imax),...
-                ' iterations.'));
-        end
-
         % returns converged root along with intermediate root estimates
         root = x(1:i);
     
@@ -161,15 +155,18 @@ function root = bisection_method(f,a,b,opts)
 
         end
         
-        % displays warning if maximum number of iterations reached
-        if (i == imax) && warnings
-            warning(strcat('The method failed after n=',num2str(imax),...
-                ' iterations.'));
-        end
-
         % returns converged root
         root = c;
         
+    end
+
+    % ---------------------------------------------------------
+    % Displays warning if maximum number of iterations reached.
+    % ---------------------------------------------------------
+
+    if (i == imax) && warnings
+        warning(strcat('The method failed after i=',num2str(imax),...
+            ' iterations.'));
     end
       
 end

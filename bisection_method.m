@@ -1,172 +1,128 @@
 %==========================================================================
 %
-% bisection_method  Calculates the root of a univariate, scalar-valued 
-% function using the bisection method.
+% bisection_method  Bisection method for finding the root of a univariate, 
+% scalar-valued function.
 %
-%   root = bisection_method(f,a,b)
-%   root = bisection_method(f,a,b,opts)
+%   x = bisection_method(f,a,b)
+%   x = bisection_method(f,a,b,opts)
+%   [x,k] = bisection_method(__)
+%   [x,k,x_all] = bisection_method(__)
 %
-% See also fzero, newtons_method, secant_method, fixed_point_iteration.
+% See also fzero, newtons_method, secant_method.
 %
-% Copyright © 2021 Tamas Kis
-% Last Update: 2021-12-27
+% Copyright © 2022 Tamas Kis
+% Last Update: 2022-04-20
 % Website: https://tamaskis.github.io
 % Contact: tamas.a.kis@outlook.com
 %
 % TECHNICAL DOCUMENTATION:
-% https://tamaskis.github.io/documentation/Bisection_Method.pdf
-%
-% REFERENCES:
-%   [1] https://en.wikipedia.org/wiki/Bisection_method
-%   [2] Burden and Faires, "Numerical Analysis", 9th Ed. (pp. 48-55)
+% https://tamaskis.github.io/documentation/Root_Finding_Methods.pdf
 %
 %--------------------------------------------------------------------------
 %
 % ------
 % INPUT:
 % ------
-%   f       - (1×1 function_handle) univariate, scalar-valued function f(x)
-%             (f:R->R)
-%   a       - (1×1 double) initial guess for lower bound of interval with 
-%             root
-%   b       - (1×1 double) initial guess for upper bound of interval with 
-%             root
-%   opts    - (OPTIONAL) (1×1 struct) solver options
-%       • imax       - (1×1 double) maximimum number of iterations 
-%                      (defaults to 1e6)
-%       • return_all - (1×1 logical) all intermediate root estimates are
-%                      returned if set to "true"; otherwise, a faster 
-%                      algorithm is used to return only the converged root
-%                      (defaults to false)
-%       • TOL        - (1×1 double) tolerance (defaults to 1e-12)
-%       • warnings   - (1×1 logical) true if any warnings should be 
-%                      displayed, false if not (defaults to true)
+%   f       - (1×1 function_handle) univariate, scalar-valued function, 
+%             f(x) (f : ℝ → ℝ)
+%   a       - (1×1 double) lower bound of interval containing root
+%   b       - (1×1 double) upper bound of interval containing root
+%   opts    - (1×1 struct) (OPTIONAL) solver options
+%       • k_max      - (1×1 double) maximimum number of iterations 
+%                      (defaults to 200)
+%       • return_all - (1×1 logical) returns estimates at all iterations if
+%                      set to "true"
+%       • TOL        - (1×1 double) tolerance (defaults to 10⁻¹⁰)
 %
 % -------
 % OUTPUT:
 % -------
-%   root    - (1×1 double or 1D double array) root of f(x)
-%           	--> If "return_all" is specified as "true", then "root" 
-%                   will be a vector, where the first element is the 
-%                   initial guess, the last element is the converged root, 
-%                   and the other elements are intermediate estimates of 
-%                   the root.
-%               --> Otherwise, "root" is a single number storing the
-%                   converged root.
+%   x       - (1×1 double) root of f(x)
+%   k       - (1×1 double) number of solver iterations
+%   x_all   - (1×(k+1) double) root estimates at all iterations
 %
 %==========================================================================
-function root = bisection_method(f,a,b,opts)
+function [x,k,x_all] = bisection_method(f,a,b,opts)
     
     % ----------------------------------
     % Sets (or defaults) solver options.
     % ----------------------------------
     
-    % sets maximum number of iterations (defaults to 1e6)
-    if (nargin < 4) || isempty(opts) || ~isfield(opts,'imax')
-        imax = 1e6;
+    % sets maximum number of iterations (defaults to 200)
+    if (nargin < 4) || isempty(opts) || ~isfield(opts,'k_max')
+        k_max = 200;
     else
-        imax = opts.imax;
+        k_max = opts.k_max;
     end
     
-    % determines return value (defaults to only return converged root)
+    % determines if all intermediate estimates should be returned
     if (nargin < 4) || isempty(opts) || ~isfield(opts,'return_all')
         return_all = false;
     else
         return_all = opts.return_all;
     end
     
-    % sets tolerance (defaults to 1e-12)
+    % sets tolerance (defaults to 10⁻¹⁰)
     if (nargin < 4) || isempty(opts) || ~isfield(opts,'TOL')
-        TOL = 1e-12;
+        TOL = 1e-10;
     else
         TOL = opts.TOL;
     end
     
-    % determines if warnings should be displayed (defaults to true)
-    if (nargin < 4) || isempty(opts) || ~isfield(opts,'warnings')
-        warnings = true;
-    else
-        warnings = opts.warnings;
-    end
+    % -----------------
+    % Bisection method.
+    % -----------------
     
-    % ----------------------------------------------------
-    % "Return all" implementation of the bisection method.
-    % ----------------------------------------------------
+    % root estimate at first iteration
+    c = (a+b)/2;
     
+    % function evaluations at first iteration
+    fa = f(a);
+    fc = f(c);
+    
+    % preallocates array
     if return_all
-        
-        % preallocates x
-        x = zeros(imax,1);
+        x_all = zeros(1,k_max+1);
+    end
     
-        % inputs initial guess for root into x vector
-        x(1) = (a+b)/2;
-
-        % bisection method
-        i = 1;
-        while ((b-a) > TOL) && (i < imax)
-            
-            % updates interval
-            if f(x(i)) == 0
-                break;
-            elseif sign(f(x(i))) == sign(f(a))
-                a = x(i);
-            else
-                b = x(i);
-            end
-            
-            % updates root estimate
-            x(i+1) = (a+b)/2;
-
-            % increments loop index
-            i = i+1;
-
+    % bisection method
+    for k = 1:k_max
+        
+        % stores results in arrays
+        if return_all
+            x_all(k) = c;
         end
         
-        % returns converged root along with intermediate root estimates
-        root = x(1:i);
-    
-    % ----------------------------------------------
-    % "Fast" implementation of the bisection method.
-    % ----------------------------------------------
-    
-    else
+        % updates interval
+        if fc == 0
+            break;
+        elseif (fa*fc > 0)
+            a = c;
+            fa = fc;
+        else
+            b = c;
+        end
         
-        % sets initial guess
+        % updates root estimate
         c = (a+b)/2;
-
-        % bisection method
-        i = 1;
-        while ((b-a) > TOL) && (i < imax)
-
-            % updates interval
-            if f(c) == 0
-                break;
-            elseif sign(f(c)) == sign(f(a))
-                a = c;
-            else
-                b = c;
-            end
-            
-            % updates root estimate
-            c = (a+b)/2;
-
-            % increments loop index
-            i = i+1;
-
+        
+        % terminates solver if converged
+        if ((b-a) < TOL)
+            break;
         end
         
-        % returns converged root
-        root = c;
+        % function evaluation at updated root estimate
+        fc = f(c);
         
     end
-
-    % ---------------------------------------------------------
-    % Displays warning if maximum number of iterations reached.
-    % ---------------------------------------------------------
-
-    if (i == imax) && warnings
-        warning(strcat('The method failed after i=',num2str(imax),...
-            ' iterations.'));
+    
+    % converged root
+    x = c;
+    
+    % stores converged result and trims array
+    if return_all
+        x_all(k+1) = x;
+        x_all = x_all(1:(k+1));
     end
-      
+    
 end

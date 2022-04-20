@@ -10,7 +10,7 @@
 %
 % See also fzero, newtons_method, secant_method.
 %
-% Copyright © 2022 Tamas Kis
+% Copyright © 2021 Tamas Kis
 % Last Update: 2022-04-20
 % Website: https://tamaskis.github.io
 % Contact: tamas.a.kis@outlook.com

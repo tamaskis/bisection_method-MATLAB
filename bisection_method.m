@@ -5,7 +5,7 @@
 %
 %   x = bisection_method(f,a,b)
 %   x = bisection_method(f,a,b,opts)
-%   [x,k] = bisection_method(__) d
+%   [x,k] = bisection_method(__)
 %   [x,k,x_all] = bisection_method(__)
 %
 % See also fzero, newtons_method, secant_method.

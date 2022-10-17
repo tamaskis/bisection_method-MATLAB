@@ -11,7 +11,7 @@
 % See also fzero, newtons_method, secant_method.
 %
 % Copyright © 2021 Tamas Kis
-% Last Update: 2022-07-06
+% Last Update: 2022-10-16
 % Website: https://tamaskis.github.io
 % Contact: tamas.a.kis@outlook.com
 %
@@ -76,6 +76,12 @@ function [x,k,x_all] = bisection_method(f,a,b,opts)
     % root estimate at first iteration
     c = (a+b)/2;
     
+    % returns root estimate at first iteration if it is a root of f(x)
+    if f(c) == 0
+        x = c;
+        return
+    end
+    
     % function evaluations at first iteration
     fa = f(a);
     fc = f(c);
@@ -85,7 +91,7 @@ function [x,k,x_all] = bisection_method(f,a,b,opts)
         x_all = zeros(1,k_max+1);
     end
     
-    % bisection method
+    % iteration
     for k = 1:k_max
         
         % stores results in arrays
